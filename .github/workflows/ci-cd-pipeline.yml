@@ -44,12 +44,18 @@ jobs:
           docker push maliabhi23/myime:latest
 
   deploy:
-    need: build
-    runs-on: aws-ec2
+    needs: build-and-deploy
+    runs-on: ubuntu-latest  # Replace with a setup to connect to your EC2 instance
     steps:
-      # Step 7: pull the image 
-      - name: pull image from  docker hub 
-        run: docker pull maliabhi23/myime:latest
-      -name: run docker container
-       run: docker run -d -p 80:8501 --name myime maliabhi23/myime:latest
-       
+      # Step 7: Connect to EC2 instance via SSH and run commands
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+            docker pull maliabhi23/myime:latest
+            docker stop myime || true && docker rm myime || true
+            docker run -d -p 80:8501 --name myime maliabhi23/myime:latest
