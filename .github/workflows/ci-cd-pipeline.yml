@@ -45,7 +45,7 @@ jobs:
 
   deploy:
     needs: build-and-deploy
-    runs-on: ubuntu-latest  # Replace with a setup to connect to your EC2 instance
+    runs-on: ubuntu-latest  #  Replace with a setup to connect to your EC2 instance
     steps:
       # Step 7: Connect to EC2 instance via SSH and run commands
       - name: Deploy to EC2
