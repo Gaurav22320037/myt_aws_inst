@@ -3,7 +3,7 @@ name: Python CI/CD Pipeline
 on:
   push:
     branches:
-     - main  # Trigger the workflow on push to  the `deploy-to-ec2 ` branch
+     - main  # Trigger the workflow on push to  the  `deploy-to-ec2 ` branch
 
 jobs:
   build-and-deploy:
