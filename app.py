@@ -6,7 +6,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.ensemble import RandomForestRegressor
 
-# Load the saved models and encoders
+# Load the saved models and encoder s
 with open('crop_nutrient_model.pkl', 'rb') as model_file:
     crop_nutrient_model = pickle.load(model_file)
 
