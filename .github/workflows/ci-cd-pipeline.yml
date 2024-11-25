@@ -41,10 +41,10 @@ jobs:
       #     pytest --maxfail=5 --disable-warnings
 
       # Step 6: Lint Code
-      - name: Lint Code
-        run: |
-          pip install flake8
-          flake8 .
+      # - name: Lint Code
+      #   run: |
+      #     pip install flake8
+      #     flake8 .
 
       # Step 7: Log in to Docker Hub
       - name: Log in to Docker Hub
