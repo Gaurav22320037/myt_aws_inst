@@ -95,7 +95,7 @@ def login_user(username, password):
     return cursor.fetchone() is not None
 
 # App begins
-st.set_page_config(page_title="Crop & Nutrient Recommendation", layout="wide")
+st.set_page_config(page_title="Crop & Nutrient t Recommendation", layout="wide")
 
 # Background style
 page_bg_img = """
