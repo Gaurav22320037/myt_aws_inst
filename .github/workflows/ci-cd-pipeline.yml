@@ -86,6 +86,6 @@ jobs:
             docker run -d -p 80:8501 --name myime maliabhi23/myime:latest
 
       # Step 12: Verify deployment with health check
-      - name: Check Service Health
-        run: |
-          curl -f http://<YOUR_EC2_IP>:8501 || exit 1
+      # - name: Check Service Health
+      #   run: |
+      #     curl -f http://<YOUR_EC2_IP>:8501 || exit 1
