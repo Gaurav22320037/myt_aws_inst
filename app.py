@@ -7,13 +7,14 @@ import sqlite3
 from PIL import Image
 import bcrypt
 import hashlib
+import numpy as np
 
 
 
 # API credentials
 API_KEY = "661e31209c95328976a7cdc51aebf03f"
 FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
-CURRENT_WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
+
 
 
 # Load models
@@ -22,12 +23,6 @@ with open('best_rfc.pkl', 'rb') as crop_model_file:
 
 with open('scaler.pkl', 'rb') as scaler_file:
     scaler = pickle.load(scaler_file)
-
-with open('crop_nutrient_model.pkl', 'rb') as nutrient_model_file:
-    nutrient_model = pickle.load(nutrient_model_file)
-
-with open('encoder.pkl', 'rb') as encoder_file:
-    encoder = pickle.load(encoder_file)
 
 
 
@@ -94,8 +89,8 @@ def login_user(username, password):
     cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, hash_password(password)))
     return cursor.fetchone() is not None
 
-# App begins
-st.set_page_config(page_title="Crop & Nutrient t Recommendation", layout="wide")
+# start of the app
+st.set_page_config(page_title="Crop & Nutrient Recommendation", layout="wide")
 
 # Background style
 page_bg_img = """
@@ -137,25 +132,12 @@ if not st.session_state.logged_in:
                     st.error("Username already exists.")
 
 
-# else:
-#     with st.sidebar:
-#         st.header(f"Welcome, {st.session_state.username}!")
-#         if st.button("Logout"):
-#             st.session_state.logged_in = False
-#             st.session_state.username = None
-#             st.experimental_rerun()
-
-
-
-
-
-
 
 # Apply custom CSS for a transparent background image
 st.markdown("""
     <style>
         body {
-            background-image: url("https://i.imgur.com/ZvX3Xs6.png"); /* Replace with your image URL */
+            background-image: url("https://i.imgur.com/ZvX3Xs6.png"); 
             background-size: cover;
             background-attachment: fixed;
             background-repeat: no-repeat;
@@ -178,20 +160,19 @@ if st.session_state.logged_in:
             st.session_state.username = None
             st.experimental_rerun()
     # Home Tab
-    with homepage :
+    with homepage:
         st.markdown("""
-                <div class="transparent">
-                <h1 style="text-align: center;">🌾 Welcome to the   ttt Crop & Nutrient Recommendation System 🌾</h1>
-                <p style="text-align: center; font-size: 18px;">
-                This platform provides recommendations for the best crops based on soil nutrients and weather conditions.
-                Additionally, it predicts the optimal nutrient requirements for selected crops to boost agricultural yields.
-                </p>
-                <div style="text-align: center;">
-                <a href="https://github.com/your_github_username" target="_blank" style="margin: 0 10px;">🌐 GitHub</a>
+                    <div class="transparent">
+                    <h1 style="text-align: center;">🌾 Welcome to the Crop & Nutrient Recommendation System 🌾</h1>
+                    <p style="text-align: center; font-size: 18px;">
+                    This platform provides recommendations for the best crops based on soil nutrients and weather conditions.
+                    Additionally, it predicts the optimal nutrient requirements for selected crops to boost agricultural yields.
+                    </p>
+                    <div style="text-align: center;">
+                    <a href="https://github.com/maliabhi23/i" target="_blank" style="margin: 0 10px;">🌐 GitHub</a>
+                </div>
             </div>
-        </div>
-            """, unsafe_allow_html=True)
-
+                """, unsafe_allow_html=True)
     # Tab 1: Predict Crop
     with tab1:
         st.header("1️⃣ Soil Nutrient Details")
@@ -231,52 +212,79 @@ if st.session_state.logged_in:
     with tab2:
         st.header("🌾 Select Crop to Predict Nutrient Requirements")
         crop_name = st.selectbox("Select a Crop", options=list(reverse_crop_dict.keys()))
-        if st.button("Predict Nutrients"):
-            crop_index = reverse_crop_dict[crop_name]
-            encoded_crop = encoder.transform([[crop_name]])
-            nutrient_prediction = nutrient_model.predict(encoded_crop)
-            nutrients = nutrient_prediction[0]
-            st.write("🧪 Predicted Nutrient Requirements and Conditions:")
-            st.write(f"**Nitrogen (N):** {nutrients[0]:.2f}")
-            st.write(f"**Phosphorus (P):** {nutrients[1]:.2f}")
-            st.write(f"**Potassium (K):** {nutrients[2]:.2f}")
-            st.write(f"**Temperature (°C):** {nutrients[3]:.2f}")
-            st.write(f"**Humidity (%):** {nutrients[4]:.2f}")
-            st.write(f"**pH Value:** {nutrients[5]:.2f}")
-            st.write(f"**Rainfall (mm):** {nutrients[6]:.2f}")
+
+  
+        df = pd.read_csv(r"E:\Datasets\Crop_Recommendation.csv")
+
+        # function for fetching the nutrients
+        def fetch(crop):
+            sp_crop_df = df[df["Crop"] == crop]
+            nutrient_range = dict()
+            for col in sp_crop_df.columns:
+                if col == "Crop":
+                    continue
+                nutrient_range[col] = (
+                    np.percentile(sp_crop_df[col], 25),
+                    np.percentile(sp_crop_df[col], 75),
+                )
+            return nutrient_range
+
+        # Fetch nutrient ranges for the selected crop
+        dict_range = fetch(crop_name)
+
+        if st.button("Recommend Nutrients"):
+            st.markdown("### 🧪 Recommended Nutrient Requirements and Conditions")
+
+            with st.expander("🌱 Nitrogen (N)"):
+                st.write("Essential for plant growth, particularly for leaf development and green foliage. Helps in chlorophyll synthesis.")
+                st.write(f"**Range:** `{dict_range['Nitrogen'][0]:.2f} - {dict_range['Nitrogen'][1]:.2f}`")
+
+            with st.expander("🧪 Phosphorus (P)"):
+                st.write("Crucial for root development, flower, and seed production. Involved in energy transfer and photosynthesis.")
+                st.write(f"**Range:** `{dict_range['Phosphorus'][0]:.2f} - {dict_range['Phosphorus'][1]:.2f}`")
+
+            with st.expander("🟤 Potassium (K)"):
+                st.write("Improves drought resistance, strengthens stems, and enhances overall crop quality.")
+                st.write(f"**Range:** `{dict_range['Potassium'][0]:.2f} - {dict_range['Potassium'][1]:.2f}`")
+
+            with st.expander("🌡️ Temperature (°C)"):
+                st.write("Affects germination, growth rate, and overall crop yield.")
+                st.write(f"**Range:** `{dict_range['Temperature'][0]:.2f} - {dict_range['Temperature'][1]:.2f}`")
+
+            with st.expander("💧 Humidity (%)"):
+                st.write("Impacts evapotranspiration and overall plant hydration.")
+                st.write(f"**Range:** `{dict_range['Humidity'][0]:.2f} - {dict_range['Humidity'][1]:.2f}`")
+
+            with st.expander("⚗️ pH Value"):
+                st.write("Determines nutrient availability and microbial activity in the soil.")
+                st.write(f"**Range:** `{dict_range['pH_Value'][0]:.2f} - {dict_range['pH_Value'][1]:.2f}`")
+
+            with st.expander("☔ Rainfall (mm)"):
+                st.write("Provides necessary water for crop growth and soil moisture.")
+                st.write(f"**Range:** `{dict_range['Rainfall'][0]:.2f} - {dict_range['Rainfall'][1]:.2f}`")
 
 
-    # Add the feedback CSV file path
-    FEEDBACK_FILE = "feedback.csv"
-
-    # Initialize the feedback storage file if it doesn't exist
-    if not os.path.exists(FEEDBACK_FILE):
-        pd.DataFrame(columns=["Name", "Email", "Rating", "Comments"]).to_csv(FEEDBACK_FILE, index=False)
-
+   
     # Feedback Tab
     with feedback_tab:
         st.header("💬 We Value Your Feedback!")
-
-        # Input fields for feedback
-        name = st.text_input("Your Name")
-        email = st.text_input("Your Email")
-        rating = st.slider("Rate Your Experience (1 = Poor, 5 = Excellent)", 1, 5, 3)
-        comments = st.text_area("Your Comments")
-
-        # Submit feedback
-        if st.button("Submit Feedback"):
-            if name and email and comments:
-                # Append feedback to the CSV file
-                new_feedback = pd.DataFrame(
-                    {"Name": [name], "Email": [email], "Rating": [rating], "Comments": [comments]}
-                )
-                new_feedback.to_csv(FEEDBACK_FILE, mode="a", header=False, index=False)
-                st.success("Thank you for your feedback! 💖")
-            else:
-                st.error("Please fill in all fields before submitting your feedback.")
-
-        # Display submitted feedback
-        if st.checkbox("View Feedback"):
-            feedback_data = pd.read_csv(FEEDBACK_FILE)
-            st.write("📋 Submitted Feedback:")
-            st.dataframe(feedback_data)
+        
+        st.write(
+            """
+            Please provide your feedback by filling out the form below.
+            The feedback will be submitted to our Google Form.
+            """
+        )
+        
+        # Embed Google Form using HTML
+        google_form_url = "https://forms.gle/X72FoTrD74FgB4YN8" 
+        form_iframe = f"""
+        <iframe src="{google_form_url}" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        """
+        st.markdown(form_iframe, unsafe_allow_html=True)
+        
+        st.write(
+            """
+            Alternatively, you can open the form in a new tab by clicking [here](https://forms.gle/X72FoTrD74FgB4YN8).
+            """
+        )
