@@ -181,7 +181,7 @@ if st.session_state.logged_in:
     with homepage :
         st.markdown("""
                 <div class="transparent">
-                <h1 style="text-align: center;">🌾 Welcome to the Crop & Nutrient Recommendation System 🌾</h1>
+                <h1 style="text-align: center;">🌾 Welcome to the  ttt Crop & Nutrient Recommendation System 🌾</h1>
                 <p style="text-align: center; font-size: 18px;">
                 This platform provides recommendations for the best crops based on soil nutrients and weather conditions.
                 Additionally, it predicts the optimal nutrient requirements for selected crops to boost agricultural yields.
