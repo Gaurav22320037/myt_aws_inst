@@ -214,7 +214,7 @@ if st.session_state.logged_in:
         crop_name = st.selectbox("Select a Crop", options=list(reverse_crop_dict.keys()))
 
   
-        df = pd.read_csv(r"E:\Datasets\Crop_Recommendation.csv")
+        df = pd.read_csv(r"Crop_Recommendation.csv")
 
         # function for fetching the nutrients
         def fetch(crop):
