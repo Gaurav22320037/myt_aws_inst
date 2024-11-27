@@ -1,5 +1,5 @@
 
-#🌾 Crop & Nutrient Recommendation System
+🌾 Crop & Nutrient Recommendation System
 
 This project provides a user-friendly web application that assists farmers and agricultural enthusiasts in making informed decisions about crop selection and nutrient requirements. The system uses soil nutrient data, weather conditions, and a machine learning model to recommend the most suitable crop for a given field and predict the optimal nutrient levels for selected crops.
 
