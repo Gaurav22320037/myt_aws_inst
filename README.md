@@ -46,7 +46,7 @@ Clone the repository:
 
 bash
 Copy code
-git clone https://github.com/your_username/crop-nutrient-recommendation.git
+git clone https://github.com/maliabhi23/myt_aws_inst.git
 cd crop-nutrient-recommendation
 Install required dependencies:
 
