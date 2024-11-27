@@ -8,7 +8,7 @@ Nutrient Recommendation: Provides nutrient range recommendations for specific cr
 Weather Data Integration: Fetches real-time weather data (temperature and humidity) using the OpenWeatherMap API.
 User Authentication: Login/Signup system with secure password hashing.
 Feedback System: Collects user feedback and displays it within the app.
-Interactive UI: Intuitive interface powered by Streamlit for seamless user experience.
+Interactive UI: Intuitive interface powered by Streamlit for seamless user experience. 
 🖥 Technologies Used
 Frontend: Streamlit (Python-based web framework)
 Backend:
