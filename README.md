@@ -1,14 +1,21 @@
 
-🌾 Crop & Nutrient Recommendation System
+#🌾 Crop & Nutrient Recommendation System
+
 This project provides a user-friendly web application that assists farmers and agricultural enthusiasts in making informed decisions about crop selection and nutrient requirements. The system uses soil nutrient data, weather conditions, and a machine learning model to recommend the most suitable crop for a given field and predict the optimal nutrient levels for selected crops.
 
 🚀 Features
 Crop Prediction: Recommends the best crop based on soil nutrients, weather conditions, and rainfall.
+
 Nutrient Recommendation: Provides nutrient range recommendations for specific crops to optimize yield.
+
 Weather Data Integration: Fetches real-time weather data (temperature and humidity) using the OpenWeatherMap API.
+
 User Authentication: Login/Signup system with secure password hashing.
+
 Feedback System: Collects user feedback and displays it within the app.
+
 Interactive UI: Intuitive interface powered by Streamlit for seamless user experience. 
+
 🖥 Technologies Used
 Frontend: Streamlit (Python-based web framework)
 Backend:
@@ -22,6 +29,7 @@ Pandas, NumPy (data processing)
 Scikit-learn (machine learning)
 Requests (API calls)
 bcrypt, hashlib (secure password hashing)
+
 📁 Project Structure
 graphql
 Copy code
@@ -36,6 +44,7 @@ Crop_Nutrient_Recommendation/
 │   └── farmer.jpg               # Background image for the app
 ├── Crop_Recommendation.csv      # Dataset used for nutrient range prediction
 └── README.md                    # Project documentation
+
 ⚙ Setup Instructions
 Prerequisites
 Python 3.8 or later
