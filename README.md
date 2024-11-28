@@ -4,6 +4,15 @@ This project provides a user-friendly web application that assists farmers and a
 
 ---
 
+## 🛠️ Key Contributors
+
+- 👨‍💻 Abhishek Mali
+- 👩‍💻 Gaurav Shinde
+- 👨‍💻 Rohit Kale
+- 👨‍💻 VedPrakash Bagade
+
+---
+
 ## 🚀 Features
 
 - **Crop Prediction:** Recommends the best crop based on soil nutrients, weather conditions, and rainfall.
@@ -15,7 +24,7 @@ This project provides a user-friendly web application that assists farmers and a
 
 ---
 
-## 🖥 Technologies Used
+## 🔄 Technologies Used
 
 | Component              | Technology/Library                             |
 |-------------------------|-----------------------------------------------|
@@ -101,7 +110,7 @@ Link to your hosted application (if applicable): [Crop & Nutrient Recommendation
 
 ---
 
-## 🤝 Contributing
+## 🧩 Contributing
 
 We welcome contributions! Here's how you can help:
 
@@ -122,4 +131,4 @@ This project is licensed under the MIT License.
 
 - OpenWeatherMap API for weather data
 - Streamlit for the amazing web framework
-- Dataset creators for providing high-quality agricultural data use
+- Dataset creators for providing high-quality agricultural data
