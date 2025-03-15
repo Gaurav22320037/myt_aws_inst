@@ -5,9 +5,8 @@ This project provides a user-friendly web application that assists farmers and a
 ---
 
 ## 🛠️ Key Contributors
-
-- 👨‍💻 Abhishek Mali
 - 👩‍💻 Gaurav Shinde
+- 👨‍💻 Abhishek Mali
 - 👨‍💻 Rohit Kale
 - 👨‍💻 VedPrakash Bagade
 
